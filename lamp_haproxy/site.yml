@@ -1,0 +1,42 @@
+---
+# This application deploys the whole application stack in this site
+#
+#
+# Apply common configuration to all hosts
+#
+
+- hosts: all
+  remote_user: root
+  roles:
+  - common
+
+
+# configure and deploy database servers.
+#
+
+- hosts: dbservers
+  remote_user: root
+  roles:
+  - db
+
+
+# Configure and deploy the webservers.
+# Note that we include two roles here, the 'base-apache' role 
+# which simply sets up Apache,  and 'web' 
+# which includes our example application 
+
+
+- hosts: webservers
+  remote_user: root
+  roles:
+  - base-apache
+  - web
+
+
+# Configure and deploy loadbalancer (s).
+#
+- hosts: lbservers
+  remote_user: root
+  roles:
+  - haproxy
+

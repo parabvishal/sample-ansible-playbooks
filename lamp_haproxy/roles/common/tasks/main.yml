@@ -1,0 +1,7 @@
+---
+#This is common playbook to setup all nodes
+
+- name: upgrade all packages
+  yum:
+   name: *
+   state: latest

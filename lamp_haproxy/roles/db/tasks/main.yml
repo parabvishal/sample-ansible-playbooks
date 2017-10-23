@@ -1,0 +1,47 @@
+---
+
+# this playbook will install and configure mysql
+#
+
+#- name: Add repository
+#  yum_repository:
+#     name: MariaDB
+#     description: EPEL YUM repo to Install MariaDB
+#     baseusrl: http://yum.mariadb.org/10.1/centos7-amd64
+#     gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+#     gpgcheck: yes
+
+- name: Install Mysql Package
+  yum: name={{ item }} state=present
+  with_items:
+    - mysql++
+    - mysql++-devel
+    - mysql++-manuals
+    - mysql-connector-java
+    - mysql-connector-odbc
+    - mysql-connector-python
+    - mysql-mmm
+    - mysql-mmm-agent
+    - mysql-mmm-monitor
+    - mysql-mmm-tools
+    - mysql-proxy
+    - mysql-proxy-devel
+    - mysql-utilities
+    - mysqlreport
+    - mysqltuner
+    - MariaDB-server
+    - MariaDB-client
+    - MySQL-python
+- name: Create Mysql configuration file
+  template: src=templates/my.cnf.j2 dest=/etc/my.cnf
+  notify:
+   - restart mysql
+
+- name: Start Mysql Service
+  service: name=mariadb state=started enabled=yes
+
+- name: create application DB
+  mysql_db: name={{ dbname }} state=present
+
+- name: create application DB user
+  mysql_user: name={{ dbuser }} password={{ upassword }} priv=*.*:ALL host='%' state=present

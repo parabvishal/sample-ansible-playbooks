@@ -1,0 +1,16 @@
+---
+
+# install php and git
+#
+#
+
+- name: Install php and git
+  yum: name={{ item }} state=present
+  with_items:
+    - php
+    - php-mysql
+    - git
+
+- name: Copy the code from repository
+  git: repo={{ repository }} dest=/var/www/html/
+#  git: repo={{ repository }} version={{ webapp_versiion }} dest=/var/www/html/

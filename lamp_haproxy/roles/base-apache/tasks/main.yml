@@ -1,0 +1,12 @@
+---
+
+#httpd installation on webservers
+
+- name: Install http and php
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd
+    - php
+
+- name: check start httpd service/demon
+  service: name=httpd state=started enabled=yes

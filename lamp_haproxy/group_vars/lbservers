@@ -1,0 +1,9 @@
+---
+
+#HAProxy variables
+
+mode: http
+listenport: 8080
+daemonname: mylb
+balance: roundrobin
+iface: '{{ ansible_default_ipv4.interface }}'

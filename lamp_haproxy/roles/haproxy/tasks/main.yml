@@ -1,0 +1,20 @@
+---
+
+# HAProxy Installation
+#
+#
+
+- name: Install HAProxy and socat
+  yum: name={{ item }} state=present
+  with_items:
+    - haproxy
+    - socat
+
+
+- name: Configure the haproxy cnf file
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  notify: restart haproxy
+
+
+- name: Start the haproxy
+  service: name=haproxy state=started enabled=yes

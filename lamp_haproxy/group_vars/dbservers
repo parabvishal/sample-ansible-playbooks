@@ -1,0 +1,9 @@
+---
+
+#Variables for mysql
+
+mysqlservice: mysqld
+mysql_port: 3306
+dbuser: root
+dbname: vishaldb
+upassword: x
